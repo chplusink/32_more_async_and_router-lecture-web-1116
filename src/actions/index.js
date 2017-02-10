@@ -27,7 +27,7 @@ export function updateCurrentNote(noteId){
 
 export function updateNote(noteParams){
   axios.patch(`http://localhost:3000/api/v1/notes/${noteParams.id}`, noteParams.note )
-                .then(response => response.data )
+                .then( response => response.data )
   return {
     type: 'UPDATE_NOTE',
     payload: {
@@ -35,5 +35,13 @@ export function updateNote(noteParams){
       body: noteParams.note.body,
       title: noteParams.note.title
     }
+  }
+}
+
+export function deleteNote(noteId){
+  const notes = axios.delete(`http://localhost:3000/api/v1/notes/${noteId}`).then( response => response.data )
+  return {
+    type: 'FETCH_NOTES',
+    payload: notes
   }
 }
