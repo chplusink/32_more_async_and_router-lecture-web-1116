@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-import { updateNote, deleteNote } from '../actions/'
+import { updateNote, deleteNote, updateCurrentNote } from '../actions/'
 
 class NoteShow extends Component {
 
@@ -29,6 +29,7 @@ class NoteShow extends Component {
   }
 
   render(){
+   this.props.updateCurrentNote(this.props.params.id)
     if ( !this.props.note ) {
       return (<div>Select or Add a Note to get started...</div>)
     }
@@ -46,7 +47,7 @@ class NoteShow extends Component {
 }
 
 function mapStateToProps(state, ownProps){
-  const note = state.notes.find( note => note.id === state.currentNote )
+  const note = state.notes.find( note => note.id == state.currentNote )
 
   return {
     note: note
@@ -62,6 +63,10 @@ function mapDispatchToProps(dispatch){
     deleteNote: function(noteId){
       let action = deleteNote( noteId )
       dispatch(action)
+    },
+    updateCurrentNote: function(noteId){
+      let action = updateCurrentNote( noteId )
+      dispatch( action )
     }
   }
 }
